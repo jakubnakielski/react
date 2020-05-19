@@ -1,4 +1,11 @@
 {
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
   "plugins": ["prettier"],
   "extends": [
     "airbnb",
@@ -13,6 +20,8 @@
     "document": true
   },
   "rules": {
+    "max-len": 100,
+    "import/prefer-default-export": 0,
     "prettier/prettier": ["error", { "singleQuote": true }],
     "react/jsx-filename-extension": [
       1,
