@@ -1,22 +1,38 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { routes } from 'routes';
+import { Provider } from 'react-redux';
+import store from 'store';
 import MainTemplate from 'templates/MainTemplate';
 import Notes from 'views/Notes';
 import Twitters from 'views/Twitters';
 import Articles from 'views/Articles';
 import Login from 'views/Login';
+import DetailsPage from 'views/DetailsPage';
+import NotFoundPage from 'views/NotFoundPage';
 
 const Root = () => (
-  <MainTemplate>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Notes} />
-        <Route path="/twitters" component={Twitters} />
-        <Route path="/articles" component={Articles} />
-        <Route path="/login" component={Login} />
-      </Switch>
-    </BrowserRouter>
-  </MainTemplate>
+  <Provider store={store}>
+    <MainTemplate>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path={routes.notes} component={Notes} />
+          <Redirect exact from={routes.home} to={routes.notes} />
+          <Route path={routes.note} component={DetailsPage} />
+
+          <Route exact path={routes.twitters} component={Twitters} />
+          <Route path={routes.twitter} component={DetailsPage} />
+
+          <Route exact path={routes.articles} component={Articles} />
+          <Route path={routes.article} component={DetailsPage} />
+
+          <Route path={routes.login} component={Notes} />
+
+          <Route path={routes.any} component={NotFoundPage} />
+        </Switch>
+      </BrowserRouter>
+    </MainTemplate>
+  </Provider>
 );
 
 export default Root;

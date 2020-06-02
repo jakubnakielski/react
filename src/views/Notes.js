@@ -1,14 +1,22 @@
 import React from 'react';
 import UserPageTemplate from 'templates/UserPageTemplate';
 import GridTemplate from 'templates/GridTemplate';
-import NewItemModal from 'components/organisms/NewItemModal/NewItemModal';
+import { connect } from 'react-redux';
+import Card from 'components/molecules/Card/Card';
 
-const NotesView = () => (
-    <UserPageTemplate pageType="note">
-        <NewItemModal />
-        <GridTemplate cardType="note" />
-    </UserPageTemplate>
+const Notes = ({ notes }) => (
+    <GridTemplate cardType="notes" itemsLength={notes.length}>
+        {notes.map(item => (
+            <Card
+                cardType="notes"
+                key={item.id}
+                {...item}
+            />
+        ))}
+    </GridTemplate>
 );
 
-export default NotesView;
+const mapStateToProps = ({ notes }) => ({ notes });
+
+export default connect(mapStateToProps)(Notes);
 

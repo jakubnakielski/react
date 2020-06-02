@@ -14,10 +14,11 @@
     "plugin:prettier/recommended"
   ],
   "env": {
-    "jest": true
+    "jest": true,
+    "browser": true,
   },
   "globals": {
-    "document": true
+
   },
   "rules": {
     "max-len": 100,

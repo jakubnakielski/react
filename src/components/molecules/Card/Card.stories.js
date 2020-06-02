@@ -4,5 +4,5 @@ import Card from './Card';
 export default { title: 'Molecules/Card' };
 
 export const Primary = () => <Card />;
-export const Secondary = () => <Card cardType="twitter" />;
-export const Tertiary = () => <Card cardType="article" />;
+export const Secondary = () => <Card cardType="twitters" />;
+export const Tertiary = () => <Card cardType="articles" />;

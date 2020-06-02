@@ -51,7 +51,7 @@ const Sidebar = ({ pageType }) => (
             <li>
                 <ButtonIcon
                     as={NavLink}
-                    to="/"
+                    to="/notes"
                     exact
                     activeClassName="isActive"
                     icon={penIcon}
