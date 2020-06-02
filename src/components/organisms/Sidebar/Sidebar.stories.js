@@ -5,6 +5,6 @@ export default {
     title: 'Organisms/Sidebar',
 };
 
-export const Notes = () => <Sidebar pageType='note' />;
-export const Twitters = () => <Sidebar pageType='twitter' />;
-export const Articles = () => <Sidebar pageType='article' />;
+export const Notes = () => <Sidebar pageType='notes' />;
+export const Twitters = () => <Sidebar pageType='twitters' />;
+export const Articles = () => <Sidebar pageType='articles' />;

@@ -1,11 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import UserPageTemplate from 'templates/UserPageTemplate';
 import GridTemplate from 'templates/GridTemplate';
+import Card from 'components/molecules/Card/Card';
 
-const Twitters = () => (
-    <UserPageTemplate pageType="twitter">
-        <GridTemplate cardType="twitter" />
-    </UserPageTemplate>
+const Twitters = ({ twitters }) => (
+    <GridTemplate cardType="twitters" itemsLength={twitters.length}>
+        {twitters.map(item => (
+            <Card
+                cardType="twitters"
+                key={item.id}
+                {...item}
+            />
+        ))}
+    </GridTemplate>
 );
 
-export default Twitters;
+const mapStateToProps = ({ twitters }) => ({ twitters });
+
+export default connect(mapStateToProps)(Twitters);

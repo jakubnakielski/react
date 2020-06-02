@@ -18,7 +18,7 @@ const Background = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.note};
+  background: ${({ theme }) => theme.notes};
 `;
 
 export const Bulb = () => <ButtonIcon icon={bulbIcon} />;
