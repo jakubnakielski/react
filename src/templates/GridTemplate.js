@@ -52,9 +52,10 @@ const GridTemplate = ({ cardType, children, itemsLength }) => (
     </UserPageTemplate>
 );
 
-export default GridTemplate;
-
 GridTemplate.propTypes = {
     cardType: PropTypes.string.isRequired,
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
 }
+
+export default GridTemplate;
+

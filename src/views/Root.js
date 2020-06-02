@@ -7,6 +7,7 @@ import MainTemplate from 'templates/MainTemplate';
 import Notes from 'views/Notes';
 import Twitters from 'views/Twitters';
 import Articles from 'views/Articles';
+import Login from 'views/Login';
 import DetailsPage from 'views/DetailsPage';
 import NotFoundPage from 'views/NotFoundPage';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import UserPageTemplate from 'templates/UserPageTemplate';
 import GridTemplate from 'templates/GridTemplate';
+import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
 
 const Notes = ({ notes }) => (

@@ -19,6 +19,7 @@ const StyledWrapper = styled.div`
   will-change: transform;
 
   :hover {cursor: pointer}
+
   @keyframes appear {
   0% { opacity: 0; transform: translate(10px, 30px) }
   100% { opacity: 1; }
