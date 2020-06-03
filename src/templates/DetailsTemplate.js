@@ -49,7 +49,9 @@ const StyledAvatar = styled('img')`
   right: -80px;
   border-radius: 50%;
 `;
-
+const StyledButton = styled(Button)`
+  margin-top: 50px;
+`;
 const DetailsTemplate = ({ pageContext, title, content, twitterName, created, articleUrl }) => (
   <StyledWrapper>
     <StyledHeading big> {title} </StyledHeading>
@@ -62,9 +64,9 @@ const DetailsTemplate = ({ pageContext, title, content, twitterName, created, ar
       </StyledParagraph>
     }
 
-    <Button as={Link} to={routes[pageContext]} activecolor={pageContext}>
+    <StyledButton as={Link} to={routes[pageContext]} activecolor={pageContext}>
       save / close
-    </Button>
+    </StyledButton>
     {/* <StyledParagraph removeButton>remove note</StyledParagraph> */}
     {pageContext === 'twitters' && <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
     }

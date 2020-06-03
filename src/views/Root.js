@@ -29,6 +29,7 @@ const Root = () => (
 
           <Route path={routes.any} component={NotFoundPage} />
         </Switch>
+        
       </MainTemplate>
     </BrowserRouter>
   </Provider>

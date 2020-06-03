@@ -10,15 +10,18 @@ const Button = styled.button`
   border-radius: 50px;
   background-color: ${({ activecolor, theme }) => theme[activecolor]};
   padding: 0;
-  margin-top: 50px;
   font-size: 16px;
   font-family: 'Montserrat';
   font-weight: 600;
   text-transform: uppercase;
   text-decoration: none;
-
+  transition: .1s;
+  
   :visited {color: black}
 
+  :hover {
+    filter: brightness(80%);
+  }
   ${({ secondary }) =>
     secondary &&
     css`

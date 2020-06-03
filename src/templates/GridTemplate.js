@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
+import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import plusIcon from 'assets/plus.svg';
+import NewItemBar from 'components/organisms/NewItemBar/NewItemBar';
 
 const StyledWrapper = styled.div`
     padding: 25px 130px 25px 70px;
@@ -41,19 +44,52 @@ const StyledParagraph = styled(Paragraph)`
     font-size: ${({ theme }) => theme.fontSize.m};
     color: ${({ theme }) => theme.grey300};
 `;
-const GridTemplate = ({ children, itemsLength, pageContext }) => (
-    <UserPageTemplate>
-        <StyledWrapper>
-            <StyledPageHeader>
-                <Input placeholder="Search" search />
-                <StyledHeading big>{pageContext}</StyledHeading>
-                <StyledParagraph>{itemsLength} {pageContext}</StyledParagraph>
-            </StyledPageHeader>
-            <StyledGrid>{children}</StyledGrid>
-        </StyledWrapper>
-    </UserPageTemplate>
-);
+const StyledButtonIcon = styled(ButtonIcon)`
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+    background-color: ${({ activeColor, theme }) => theme[activeColor]};
+    background-size: 35%;
+    border-radius: 50%;
+`;
+class GridTemplate extends React.Component {
+    state = {
+        isBarOpen: false,
+    }
 
+    toggleItemBarVisibility = () => {
+        const { isBarOpen } = this.state;
+        this.setState({ isBarOpen: !isBarOpen });
+    }
+
+    render() {
+        const { children, itemsLength, pageContext } = this.props;
+        const { isBarOpen } = this.state;
+
+        return (
+            <UserPageTemplate>
+                <StyledWrapper>
+                    <StyledPageHeader>
+                        <Input placeholder="Search" search />
+                        <StyledHeading big>{pageContext}</StyledHeading>
+                        <StyledParagraph>{itemsLength} {pageContext}</StyledParagraph>
+                    </StyledPageHeader>
+                    <StyledGrid>{children}</StyledGrid>
+                </StyledWrapper>
+                <StyledButtonIcon
+                    icon={plusIcon}
+                    activeColor={pageContext}
+                    onClick={this.toggleItemBarVisibility}
+                />
+                <NewItemBar closeItemBarFn={this.toggleItemBarVisibility} isBarOpen={isBarOpen} />
+            </UserPageTemplate>
+
+        )
+    }
+}
 GridTemplate.propTypes = {
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
     itemsLength: PropTypes.number.isRequired,
