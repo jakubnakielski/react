@@ -1,4 +1,5 @@
 import React from "react";
+import withContext from "hoc/withContext";
 import PropTypes from 'prop-types';
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
@@ -49,29 +50,29 @@ const StyledAvatar = styled('img')`
   border-radius: 50%;
 `;
 
-const DetailsTemplate = ({ pageType, title, content, twitterName, created, articleUrl }) => (
+const DetailsTemplate = ({ pageContext, title, content, twitterName, created, articleUrl }) => (
   <StyledWrapper>
     <StyledHeading big> {title} </StyledHeading>
     <StyledParagraph dateInfo>Created {created} ago</StyledParagraph>
     <StyledParagraph> {content} </StyledParagraph>
 
-    {pageType === 'articles' &&
+    {pageContext === 'articles' &&
       <StyledParagraph as="a" href="https://google.com" openArticle>
         open article
       </StyledParagraph>
     }
 
-    <Button as={Link} to={routes[pageType]} activecolor={pageType}>
+    <Button as={Link} to={routes[pageContext]} activecolor={pageContext}>
       save / close
     </Button>
     {/* <StyledParagraph removeButton>remove note</StyledParagraph> */}
-    {pageType === 'twitters' && <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
+    {pageContext === 'twitters' && <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
     }
   </StyledWrapper>
 );
 
 DetailsTemplate.propTypes = {
-  pageType: PropTypes.string.isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string,
   created: PropTypes.string,
   content: PropTypes.string,
@@ -80,6 +81,7 @@ DetailsTemplate.propTypes = {
 }
 
 DetailsTemplate.defaultProps = {
+  pageContext: 'notes',
   title: '',
   created: '',
   content: '',
@@ -87,4 +89,4 @@ DetailsTemplate.defaultProps = {
   twitterName: '',
 }
 
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

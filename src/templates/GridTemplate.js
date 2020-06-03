@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import withContext from 'hoc/withContext.js';
 import PropTypes from 'prop-types';
 import UserPageTemplate from 'templates/UserPageTemplate';
 import styled from 'styled-components';
@@ -39,22 +41,27 @@ const StyledParagraph = styled(Paragraph)`
     font-size: ${({ theme }) => theme.fontSize.m};
     color: ${({ theme }) => theme.grey300};
 `;
-const GridTemplate = ({ cardType, children, itemsLength }) => (
-    <UserPageTemplate pageType={cardType}>
+const GridTemplate = ({ children, itemsLength, pageContext }) => (
+    <UserPageTemplate>
         <StyledWrapper>
             <StyledPageHeader>
                 <Input placeholder="Search" search />
-                <StyledHeading big>{cardType}</StyledHeading>
-                <StyledParagraph>{itemsLength} {cardType}</StyledParagraph>
+                <StyledHeading big>{pageContext}</StyledHeading>
+                <StyledParagraph>{itemsLength} {pageContext}</StyledParagraph>
             </StyledPageHeader>
             <StyledGrid>{children}</StyledGrid>
         </StyledWrapper>
     </UserPageTemplate>
 );
 
-export default GridTemplate;
+GridTemplate.propTypes = {
+    children: PropTypes.arrayOf(PropTypes.element).isRequired,
+    itemsLength: PropTypes.number.isRequired,
+    pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+}
 
 GridTemplate.propTypes = {
-    cardType: PropTypes.string.isRequired,
-    children: PropTypes.arrayOf(PropTypes.element).isRequired,
+    pageContext: 'notes',
 }
+
+export default withContext(GridTemplate);

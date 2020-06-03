@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { removeItemAction } from 'actions';
+import withContext from 'hoc/withContext';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
@@ -53,7 +54,7 @@ const StyledHeading = styled(Heading)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: ${({ cardType }) => cardType !== 'note' ? '21ch' : '26ch'};
+    max-width: ${({ cardType }) => cardType !== 'notes' ? '21ch' : '26ch'};
 `;
 const DateInfo = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
@@ -110,24 +111,25 @@ class Card extends React.Component {
   }
 
   render() {
-    const { id, cardType, title, created, twitterName, articleUrl, content, removeItem } = this.props;
+    const { id, title, created, twitterName, articleUrl, content, removeItem, pageContext } = this.props;
 
     if (this.state.redirected) {
-      return <Redirect to={`${cardType}/${id}`} />
+      return <Redirect to={`${pageContext}/${id}`} />
     }
 
     return (
       <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activeColor={cardType}>
-          <StyledHeading cardType={cardType}>{title}</StyledHeading>
+        <InnerWrapper activeColor={pageContext}>
+          {console.log(pageContext)}
+          <StyledHeading cardType={pageContext}>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
-          {cardType === 'twitters' && (<StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />)}
-          {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+          {pageContext === 'twitters' && (<StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />)}
+          {pageContext === 'articles' && <StyledLinkButton href={articleUrl} />}
         </InnerWrapper>
         <InnerWrapper flex>
           <StyledParagraph>{content}</StyledParagraph>
           <StyledParagraph readMore>Read more</StyledParagraph>
-          <Button onClick={() => removeItem(cardType, id)} secondary>REMOVE</Button>
+          <Button onClick={() => removeItem(pageContext, id)} secondary>REMOVE</Button>
         </InnerWrapper>
       </StyledWrapper>
     )
@@ -138,10 +140,10 @@ const mapDispatchToProps = (dispatch) => ({
   removeItem: (itemType, id) => dispatch(removeItemAction(itemType, id)),
 });
 
-export default connect(null, mapDispatchToProps)(Card);
+export default connect(null, mapDispatchToProps)(withContext(Card));
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
@@ -149,5 +151,5 @@ Card.propTypes = {
   removeItem: PropTypes.func.isRequired,
 };
 Card.defaultProps = {
-  cardType: 'notes',
+  pageContext: 'notes',
 };

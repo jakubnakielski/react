@@ -12,8 +12,8 @@ import NotFoundPage from 'views/NotFoundPage';
 
 const Root = () => (
   <Provider store={store}>
-    <MainTemplate>
-      <BrowserRouter>
+    <BrowserRouter>
+      <MainTemplate>
         <Switch>
           <Route exact path={routes.notes} component={Notes} />
           <Redirect exact from={routes.home} to={routes.notes} />
@@ -29,8 +29,8 @@ const Root = () => (
 
           <Route path={routes.any} component={NotFoundPage} />
         </Switch>
-      </BrowserRouter>
-    </MainTemplate>
+      </MainTemplate>
+    </BrowserRouter>
   </Provider>
 );
 
