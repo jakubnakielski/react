@@ -46,8 +46,8 @@ const StyledLogoutButton = styled(ButtonIcon)`
     background-size: 50%;
 `;
 
-const Sidebar = ({ pageContext }) => (
-    <StyledWrapper activeColor={pageContext}>
+const Sidebar = ({ pageTypeContext: pageType }) => (
+    <StyledWrapper activeColor={pageType}>
         <StyledLogoLink to="/" />
         <StyledLinksList>
             <li>
@@ -87,11 +87,11 @@ const Sidebar = ({ pageContext }) => (
 );
 
 Sidebar.propTypes = {
-    pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+    pageTypeContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
 }
 
 Sidebar.defaultProps = {
-    pageContext: 'notes',
+    pageTypeContext: 'notes',
 }
 
 export default withContext(Sidebar);

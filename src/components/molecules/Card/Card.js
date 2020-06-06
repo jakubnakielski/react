@@ -24,7 +24,7 @@ const StyledWrapper = styled.div`
 
   @keyframes appear {
   0% { opacity: 0; transform: translate(10px, 30px) }
-  100% { opacity: 1; 
+  100% { opacity: 1;
   }
 }
 `;
@@ -111,26 +111,28 @@ class Card extends React.Component {
   }
 
   render() {
-    const { id, title, created, twitterName, articleUrl, content, removeItem, pageContext } = this.props;
+    const { id, title, created, twitterName, articleUrl, content, removeItem, pageTypeContext: pageType } = this.props;
 
     if (this.state.redirected) {
-      return <Redirect to={`${pageContext}/${id}`} />
+      return <Redirect to={`${pageType}/${id}`} />
     }
 
     return (
       <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activeColor={pageContext}>
-          {console.log(pageContext)}
-          <StyledHeading cardType={pageContext}>{title}</StyledHeading>
+
+        <InnerWrapper activeColor={pageType}>
+          <StyledHeading cardType={pageType}>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
-          {pageContext === 'twitters' && (<StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />)}
-          {pageContext === 'articles' && <StyledLinkButton href={articleUrl} />}
+          {pageType === 'twitters' && (<StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />)}
+          {pageType === 'articles' && <StyledLinkButton href={articleUrl} />}
         </InnerWrapper>
+
         <InnerWrapper flex>
           <StyledParagraph>{content}</StyledParagraph>
           <StyledParagraph readMore>Read more</StyledParagraph>
-          <Button onClick={() => removeItem(pageContext, id)} secondary>REMOVE</Button>
+          <Button onClick={() => removeItem(pageType, id)} secondary>REMOVE</Button>
         </InnerWrapper>
+
       </StyledWrapper>
     )
   }
@@ -140,10 +142,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeItem: (itemType, id) => dispatch(removeItemAction(itemType, id)),
 });
 
-export default connect(null, mapDispatchToProps)(withContext(Card));
-
 Card.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageTypeContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
@@ -151,5 +151,7 @@ Card.propTypes = {
   removeItem: PropTypes.func.isRequired,
 };
 Card.defaultProps = {
-  pageContext: 'notes',
+  pageTypeContext: 'notes',
 };
+
+export default connect(null, mapDispatchToProps)(withContext(Card));

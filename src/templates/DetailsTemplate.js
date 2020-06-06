@@ -52,29 +52,29 @@ const StyledAvatar = styled('img')`
 const StyledButton = styled(Button)`
   margin-top: 50px;
 `;
-const DetailsTemplate = ({ pageContext, title, content, twitterName, created, articleUrl }) => (
+const DetailsTemplate = ({ pageTypeContext: pageType, title, content, twitterName, created, articleUrl }) => (
   <StyledWrapper>
     <StyledHeading big> {title} </StyledHeading>
     <StyledParagraph dateInfo>Created {created} ago</StyledParagraph>
     <StyledParagraph> {content} </StyledParagraph>
 
-    {pageContext === 'articles' &&
+    {pageType === 'articles' &&
       <StyledParagraph as="a" href="https://google.com" openArticle>
         open article
       </StyledParagraph>
     }
 
-    <StyledButton as={Link} to={routes[pageContext]} activecolor={pageContext}>
+    <StyledButton as={Link} to={routes[pageType]} activecolor={pageType}>
       save / close
     </StyledButton>
     {/* <StyledParagraph removeButton>remove note</StyledParagraph> */}
-    {pageContext === 'twitters' && <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
+    {pageType === 'twitters' && <StyledAvatar src={`http://twivatar.glitch.me/${twitterName}`} />
     }
   </StyledWrapper>
 );
 
 DetailsTemplate.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageTypeContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string,
   created: PropTypes.string,
   content: PropTypes.string,
@@ -83,7 +83,7 @@ DetailsTemplate.propTypes = {
 }
 
 DetailsTemplate.defaultProps = {
-  pageContext: 'notes',
+  pageTypeContext: 'notes',
   title: '',
   created: '',
   content: '',
