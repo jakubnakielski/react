@@ -16,7 +16,8 @@ const Button = styled.button`
   text-transform: uppercase;
   text-decoration: none;
   transition: .1s;
-  
+  cursor:pointer;
+
   :visited {color: black}
 
   :hover {
