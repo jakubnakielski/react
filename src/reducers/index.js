@@ -115,7 +115,7 @@ const rootReducer = (state = initialState, action) => {
                     action.payload.item,
                 ]
             }
-            break;
+
         default:
             return state;
     }

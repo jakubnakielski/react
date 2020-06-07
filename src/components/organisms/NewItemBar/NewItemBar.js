@@ -5,13 +5,14 @@ import withContext from 'hoc/withContext';
 import onClickOutside from "react-onclickoutside";
 import { connect } from "react-redux";
 import { addItemAction } from "actions";
+import { Formik, Form, Field } from 'formik';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
 // import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div` // styled(Forma)
     position: fixed;
     top: 0;
     right: 0;
@@ -41,7 +42,7 @@ const StyledTextArea = styled(Input)`
     border-radius: 20px;
     font-size: ${({ theme }) => theme.fontSize.m};
 `;
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)`// moze byc samo Button?
     background-color: ${({ activeColor, theme }) => theme[activeColor]};
 `;
 
@@ -59,26 +60,37 @@ class NewItemBar extends React.Component {
         const { pageTypeContext: pageType, isVisible, addItem, closeFn } = this.props;
 
         return (
+
             <StyledWrapper activeColor={pageType} isVisible={isVisible}>
                 <Heading big>Create new {pageType}</Heading>
                 <StyledParagraph>A note requires title and description</StyledParagraph>
-                <StyledInput placeholder="title" />
-                {pageType === 'twitters' && <StyledInput placeholder='Account name eg. hello_roman' />}
-                {pageType === 'articles' && <StyledInput placeholder='link' />}
-                <StyledTextArea as='textarea' placeholder="description" />
-                <StyledButton onClick={() => {
-                    addItem(
-                        pageType,
-                        {
-                            title: 'Jakub Nakielski',
-                            content: 'lorem ipsum dolor sit amet!',
-                            // link: 'http://fb.com',
-                            // twitterName: 'hello_roman'
-                        });
-                    closeFn();
-                }} activeColor={pageType}
+
+                <Formik
+                    initialValues={{ title: '', content: '', articleUrl: '', twitterName: '', created: '' }}
+                    onSubmit={(values, { setSubmitting }) => {
+                        console.log(values);
+                        setSubmitting(true);
+
+                        addItem(pageType, values);
+                    }}
                 >
-                    add note</StyledButton>
+                    {({ setSubmitting }) => (
+                        <Form>
+                            <StyledInput as={Field} type='text' name='title' placeholder='title' />
+                            {pageType === 'twitters' && <StyledInput as={Field} type='text' name='twitterName' placeholder='Account name eg. hello_roman' />}
+                            {pageType === 'articles' && <StyledInput as={Field} type='text' name='articleUrl' placeholder='link' />}
+                            <StyledTextArea as={Field} type='text' name='content' placeholder="description" />
+                            <StyledButton
+                                onClick={() => closeFn()}
+                                activeColor={pageType}
+                                disabled={setSubmitting}
+                            > add note </StyledButton>
+                        </Form>
+                    )}
+
+                </Formik>
+
+
             </StyledWrapper >
         )
     }
