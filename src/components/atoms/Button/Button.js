@@ -19,6 +19,7 @@ const Button = styled.button`
   cursor:pointer;
 
   :visited {color: black}
+  :active {outline: none}
 
   :hover {
     filter: brightness(80%);

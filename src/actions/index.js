@@ -6,12 +6,22 @@ export const removeItemAction = (itemType, id) => ({
     },
 });
 
-export const addItemAction = (itemType, id, title, link, description) => ({
-    type: 'ADD_ITEM',
-    payload: {
-        itemType,
-        title,
-        link,
-        description,
+export const addItemAction = (itemType, itemContent) => {
+
+    const getId = () =>
+        `_${Math.random()
+            .toString(36)
+            .substr(2, 9)}`;
+
+    return {
+        type: 'ADD_ITEM',
+        payload: {
+            itemType,
+            item: {
+                id: getId(),
+                ...itemContent,
+            }
+        },
     }
-})
+}
+

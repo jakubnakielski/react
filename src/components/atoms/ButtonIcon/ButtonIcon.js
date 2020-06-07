@@ -15,9 +15,10 @@ const ButtonIcon = styled.button`
   &.isActive {
     background-color: white;
   }
-
+  :focus {outline: none}
   :hover {
-        cursor: pointer;
+      cursor: pointer;
+      filter: brightness(80%);
   }
 `;
 

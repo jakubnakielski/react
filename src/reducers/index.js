@@ -106,19 +106,13 @@ const rootReducer = (state = initialState, action) => {
                     ...state[action.payload.itemType].filter(item => item.id !== action.payload.id)
                 ],
             }
-        case 'ADD_ITEM':
-            const { itemType, title, link, description } = action.payload;
 
+        case 'ADD_ITEM':
             return {
                 ...state,
                 [action.payload.itemType]: [
                     ...state[action.payload.itemType],
-                    {
-                        itemType: itemType,
-                        title: title,
-                        content: description,
-                        created: '10 days',
-                    }
+                    action.payload.item,
                 ]
             }
             break;

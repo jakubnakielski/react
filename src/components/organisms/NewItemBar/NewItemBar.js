@@ -37,9 +37,9 @@ const StyledInput = styled(Input)`
 `;
 const StyledTextArea = styled(Input)`
     height: 30vh;
-    margin: 30px 0 100px;
+    margin: 20px 0 100px;
     border-radius: 20px;
-    /* font-size: ${({ theme }) => theme.fontSize.m}; */
+    font-size: ${({ theme }) => theme.fontSize.m};
 `;
 const StyledButton = styled(Button)`
     background-color: ${({ activeColor, theme }) => theme[activeColor]};
@@ -62,16 +62,24 @@ class NewItemBar extends React.Component {
             <StyledWrapper activeColor={pageType} isVisible={isVisible}>
                 <Heading big>Create new {pageType}</Heading>
                 <StyledParagraph>A note requires title and description</StyledParagraph>
-                <StyledInput placeholder={pageType === 'twitters' ? 'Account name eg. hello_roman' : 'title'} />
+                <StyledInput placeholder="title" />
+                {pageType === 'twitters' && <StyledInput placeholder='Account name eg. hello_roman' />}
                 {pageType === 'articles' && <StyledInput placeholder='link' />}
                 <StyledTextArea as='textarea' placeholder="description" />
                 <StyledButton onClick={() => {
-                    addItem(pageType, { title: 'title1', link: 'link1', description: 'desc1' });
+                    addItem(
+                        pageType,
+                        {
+                            title: 'Jakub Nakielski',
+                            content: 'lorem ipsum dolor sit amet!',
+                            // link: 'http://fb.com',
+                            // twitterName: 'hello_roman'
+                        });
                     closeFn();
                 }} activeColor={pageType}
                 >
                     add note</StyledButton>
-            </StyledWrapper>
+            </StyledWrapper >
         )
     }
 }
@@ -86,7 +94,7 @@ NewItemBar.defaultProps = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addItem: (itemType, title, link, description) => dispatch(addItemAction(itemType, title, link, description))
+    addItem: (itemType, itemContent) => dispatch(addItemAction(itemType, itemContent))
 })
 
 export default connect(null, mapDispatchToProps)(withContext(onClickOutside(NewItemBar)));
