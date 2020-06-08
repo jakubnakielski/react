@@ -49,15 +49,15 @@ const StyledButton = styled(Button)`// moze byc samo Button?
 class NewItemBar extends React.Component {
 
     handleClickOutside = (ev) => {
-        const { closeFn } = this.props;
+        const { handleClose } = this.props;
         const closeButton = document.querySelector('#closeButton');
 
         if (ev.target === closeButton) return;
-        else closeFn();
+        else handleClose();
     }
 
     render() {
-        const { pageTypeContext: pageType, isVisible, addItem, closeFn } = this.props;
+        const { pageTypeContext: pageType, isVisible, addItem, handleClose } = this.props;
 
         return (
 
@@ -68,9 +68,7 @@ class NewItemBar extends React.Component {
                 <Formik
                     initialValues={{ title: '', content: '', articleUrl: '', twitterName: '', created: '' }}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log(values);
-                        setSubmitting(true);
-
+                        setSubmitting(false);
                         addItem(pageType, values);
                     }}
                 >
@@ -81,15 +79,13 @@ class NewItemBar extends React.Component {
                             {pageType === 'articles' && <StyledInput as={Field} type='text' name='articleUrl' placeholder='link' />}
                             <StyledTextArea as={Field} type='text' name='content' placeholder="description" />
                             <StyledButton
-                                onClick={() => closeFn()}
+                                onClick={handleClose}
                                 activeColor={pageType}
                                 disabled={setSubmitting}
                             > add note </StyledButton>
                         </Form>
                     )}
-
                 </Formik>
-
 
             </StyledWrapper >
         )

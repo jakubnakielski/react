@@ -14,8 +14,9 @@ import NewItemBar from 'components/organisms/NewItemBar/NewItemBar';
 
 const StyledWrapper = styled.div`
     padding: 25px 130px 25px 70px;
+    will-change: filter;
 
-    ${({hasBlur}) => hasBlur && css`
+    ${({ hasBlur }) => hasBlur && css`
     filter: blur(5px);
     pointer-events:none;
     `}
@@ -67,26 +68,26 @@ const StyledButtonIcon = styled(ButtonIcon)`
 `;
 class GridTemplate extends React.Component {
     state = {
-        isItemBarOpen: false, //false
+        isNewItemBarOpen: false,
     }
 
     toggleItemBarVisibility = () => {
         this.setState((prevState) => ({
-            isItemBarOpen: !prevState.isItemBarOpen,
+            isNewItemBarOpen: !prevState.isNewItemBarOpen,
         }))
     };
 
-    closeItemBar = () => { //try lexical this
-        this.setState({isItemBarOpen: false})
+    closeItemBar = () => {
+        this.setState({ isNewItemBarOpen: false })
     }
 
     render() {
         const { children, itemsLength, pageTypeContext } = this.props;
-        const { isItemBarOpen } = this.state;
+        const { isNewItemBarOpen } = this.state;
 
         return (
             <UserPageTemplate>
-                <StyledWrapper hasBlur={isItemBarOpen}>
+                <StyledWrapper hasBlur={isNewItemBarOpen}>
                     <StyledPageHeader>
                         <Input placeholder="Search" search />
                         <StyledHeading big>{pageTypeContext}</StyledHeading>
@@ -99,10 +100,10 @@ class GridTemplate extends React.Component {
                     icon={plusIcon}
                     activeColor={pageTypeContext}
                     onClick={this.toggleItemBarVisibility}
-                    isOpen={isItemBarOpen}
+                    isOpen={isNewItemBarOpen}
                     id='closeButton'
                 />
-                <NewItemBar isVisible={isItemBarOpen} closeFn={this.closeItemBar} />
+                <NewItemBar isVisible={isNewItemBarOpen} handleClose={this.closeItemBar} />
 
             </UserPageTemplate>
 
