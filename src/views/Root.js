@@ -9,6 +9,8 @@ import Twitters from 'views/Twitters';
 import Articles from 'views/Articles';
 import DetailsPage from 'views/DetailsPage';
 import NotFoundPage from 'views/NotFoundPage';
+import LoginPage from 'views/LoginPage';
+import RegisterPage from 'views/RegisterPage';
 
 const Root = () => (
   <Provider store={store}>
@@ -25,11 +27,12 @@ const Root = () => (
           <Route exact path={routes.articles} component={Articles} />
           <Route path={routes.article} component={DetailsPage} />
 
-          <Route path={routes.login} component={Notes} />
+          <Route path={routes.login} component={LoginPage} />
+          <Route path={routes.register} component={RegisterPage} />
 
           <Route path={routes.any} component={NotFoundPage} />
         </Switch>
-        
+
       </MainTemplate>
     </BrowserRouter>
   </Provider>

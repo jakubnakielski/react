@@ -71,13 +71,13 @@ class GridTemplate extends React.Component {
         isNewItemBarOpen: false,
     }
 
-    toggleItemBarVisibility = () => {
+    toggleNewItemBar = () => {
         this.setState((prevState) => ({
             isNewItemBarOpen: !prevState.isNewItemBarOpen,
         }))
     };
 
-    closeItemBar = () => {
+    closeNewItemBar = () => {
         this.setState({ isNewItemBarOpen: false })
     }
 
@@ -99,11 +99,11 @@ class GridTemplate extends React.Component {
                 <StyledButtonIcon
                     icon={plusIcon}
                     activeColor={pageTypeContext}
-                    onClick={this.toggleItemBarVisibility}
+                    onClick={this.toggleNewItemBar}
                     isOpen={isNewItemBarOpen}
                     id='closeButton'
                 />
-                <NewItemBar isVisible={isNewItemBarOpen} handleClose={this.closeItemBar} />
+                <NewItemBar isVisible={isNewItemBarOpen} handleClose={this.closeNewItemBar} />
 
             </UserPageTemplate>
 
