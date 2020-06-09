@@ -14,8 +14,44 @@ const Articles = ({ articles }) => (
         ))}
     </GridTemplate>
 );
+const mapStateToProps = (state) => {
+    const { articles } = state;
 
-const mapStateToProps = ({ articles }) => ({ articles });
+    return {
+        articles: articles,
+    }
+}
 
-export default connect(mapStateToProps)(Articles);
+export default connect(mapStateToProps, null)(Articles);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const Articles = ({ articles }) => (
+//     <GridTemplate itemsLength={articles.length}>
+//         {articles.map(item => (
+//             <Card
+//                 key={item.id}
+//                 {...item}
+//             />
+//         ))}
+//     </GridTemplate>
+// );
+
+// const mapStateToProps = ({ articles }) => ({ articles });
+
+// export default connect(mapStateToProps)(Articles);
 

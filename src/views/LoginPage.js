@@ -29,8 +29,8 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.notes};
 `;
 const StyledLogo = styled('img')`
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     filter: invert(1);
 `;
 const StyledForm = styled(Form)`
@@ -53,9 +53,10 @@ const StyledParagraph = styled(Paragraph)`
     text-decoration: underline;
     font-weight: ${({ theme }) => theme.bold};
     font-size: ${({ theme }) => theme.fontSize.xs};
+    color: black;
 
-    :visited {color: black}
-    :active {color: black}
+    /* :visited {color: black}
+    :active {color: black} */
 `;
 
 const LoginPage = () => (
