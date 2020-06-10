@@ -25,3 +25,6 @@ export const addItemAction = (itemType, itemContent) => {
     }
 }
 
+export const authenticate = () => {
+    
+}

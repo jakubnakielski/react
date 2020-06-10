@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import { routes } from 'routes';
+import axios from 'axios';
 import logo from 'assets/logo.svg';
 import penIcon from 'assets/pen.svg';
 import twitterIcon from 'assets/twitter.svg';
@@ -29,8 +30,8 @@ const StyledWrapper = styled.div`
     background-color: ${({ theme }) => theme.notes};
 `;
 const StyledLogo = styled('img')`
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     filter: invert(1);
 `;
 const StyledForm = styled(Form)`
@@ -53,9 +54,10 @@ const StyledParagraph = styled(Paragraph)`
     text-decoration: underline;
     font-weight: ${({ theme }) => theme.bold};
     font-size: ${({ theme }) => theme.fontSize.xs};
+    color: black;
 
-    :visited {color: black}
-    :active {color: black}
+    /* :visited {color: black}
+    :active {color: black} */
 `;
 
 const LoginPage = () => (
@@ -68,13 +70,18 @@ const LoginPage = () => (
         </IconsWrapper>
         <Formik
             initialValues={{ username: '', password: '' }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={({ username, password }) => {
                 console.log(values);
-                setSubmitting(false);
+                axios.post("http://localhost:900/api/user/login", {
+                    username,
+                    password
+                })
+                // setSubmitting(false);
             }}
         >
             {({ setSubmitting }) => (
                 <StyledForm>
+                    {console.log(Field)}
                     <Heading>Sign in</Heading>
                     <StyledInput as={Field} type='text' name='username' placeholder='username' />
                     <StyledInput as={Field} type='password' name='password' placeholder='password' />

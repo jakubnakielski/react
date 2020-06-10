@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withContext from 'hoc/withContext';
+import { connect } from 'react-redux';
+import { addItemAction } from 'actions';
 import onClickOutside from "react-onclickoutside";
-import { connect } from "react-redux";
-import { addItemAction } from "actions";
 import { Formik, Form, Field } from 'formik';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
@@ -60,7 +60,7 @@ class NewItemBar extends React.Component {
     }
 
     render() {
-        const { pageTypeContext: pageType, isVisible, addItem, handleClose } = this.props;
+        const { pageTypeContext: pageType, isVisible, handleClose, addItem } = this.props;
 
         return (
 
@@ -71,21 +71,51 @@ class NewItemBar extends React.Component {
                 <Formik
                     initialValues={{ title: '', content: '', articleUrl: '', twitterName: '', created: '' }}
                     onSubmit={(values, { setSubmitting }) => {
-                        setSubmitting(false);
                         addItem(pageType, values);
                         handleClose();
+                        setSubmitting(false);
                     }}
                 >
-                    {({ setSubmitting }) => (
+                    {({ setSubmitting, values, handleChange, handleBlur }) => (
                         <StyledForm>
-                            <StyledInput as={Field} type='text' name='title' placeholder='title' />
-                            {pageType === 'twitters' && <StyledInput as={Field} type='text' name='twitterName' placeholder='Account name eg. hello_roman' />}
-                            {pageType === 'articles' && <StyledInput as={Field} type='text' name='articleUrl' placeholder='link' />}
-                            <StyledTextArea as={Field} type='text' name='content' placeholder="description" />
+                            <StyledInput
+                                type='text'
+                                name='title'
+                                placeholder='title'
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.title}
+                            />
+                            {pageType === 'twitters' && <StyledInput
+                                type='text'
+                                name='twitterName'
+                                placeholder='Account name
+                                eg. hello_roman'
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.twitterName}
+                            />}
+                            {pageType === 'articles' && <StyledInput
+                                type='text'
+                                name='articleUrl'
+                                placeholder='link'
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.articleUrl}
+                            />}
+                            <StyledTextArea
+                                as="textarea"
+                                type='text'
+                                name='content'
+                                placeholder="description"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.content}
+                            />
                             <StyledButton
                                 type="submit"
                                 activeColor={pageType}
-                                // disabled={setSubmitting}
+                            // disabled={setSubmitting}
                             > add note </StyledButton>
                         </StyledForm>
                     )}
@@ -98,15 +128,16 @@ class NewItemBar extends React.Component {
 
 NewItemBar.propTypes = {
     pageTypeContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-    isVisible: PropTypes.bool.isRequired,
+    isVisible: PropTypes.bool,
 }
 
 NewItemBar.defaultProps = {
     pageTypeContext: 'notes',
+    isVisible: false,
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addItem: (itemType, itemContent) => dispatch(addItemAction(itemType, itemContent))
+    addItem: (itemType, itemContent) => dispatch(addItemAction(itemType, itemContent)),
 })
 
 export default connect(null, mapDispatchToProps)(withContext(onClickOutside(NewItemBar)));
