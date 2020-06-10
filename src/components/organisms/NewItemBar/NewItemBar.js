@@ -45,7 +45,10 @@ const StyledTextArea = styled(Input)`
 const StyledButton = styled(Button)`// moze byc samo Button?
     background-color: ${({ activeColor, theme }) => theme[activeColor]};
 `;
-
+const StyledForm = styled(Form)`
+    display: flex;
+    flex-direction: column;
+`;
 class NewItemBar extends React.Component {
 
     handleClickOutside = (ev) => {
@@ -70,20 +73,21 @@ class NewItemBar extends React.Component {
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(false);
                         addItem(pageType, values);
+                        handleClose();
                     }}
                 >
                     {({ setSubmitting }) => (
-                        <Form>
+                        <StyledForm>
                             <StyledInput as={Field} type='text' name='title' placeholder='title' />
                             {pageType === 'twitters' && <StyledInput as={Field} type='text' name='twitterName' placeholder='Account name eg. hello_roman' />}
                             {pageType === 'articles' && <StyledInput as={Field} type='text' name='articleUrl' placeholder='link' />}
                             <StyledTextArea as={Field} type='text' name='content' placeholder="description" />
                             <StyledButton
-                                onClick={handleClose}
+                                type="submit"
                                 activeColor={pageType}
-                                disabled={setSubmitting}
+                                // disabled={setSubmitting}
                             > add note </StyledButton>
-                        </Form>
+                        </StyledForm>
                     )}
                 </Formik>
 
