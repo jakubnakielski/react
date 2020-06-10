@@ -99,7 +99,6 @@ NewItemBar.defaultProps = {
     isVisible: false,
 }
 
-
 export default withContext(onClickOutside(NewItemBar));
 
 
