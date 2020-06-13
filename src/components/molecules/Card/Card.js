@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { removeItemAction } from 'actions';
 import withContext from 'hoc/withContext';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -130,7 +128,7 @@ class Card extends React.Component {
         <InnerWrapper flex>
           <StyledParagraph>{content}</StyledParagraph>
           <StyledParagraph readMore>Read more</StyledParagraph>
-          <Button secondary>REMOVE</Button>
+          <Button secondary onClick={() => removeItem(pageType, id)}>REMOVE</Button>
         </InnerWrapper>
 
       </StyledWrapper>
@@ -150,7 +148,21 @@ Card.defaultProps = {
   pageTypeContext: 'notes',
 };
 
-export default withContext(Card);
+export default withContext(Card); //connect łączy komponent ze storem
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

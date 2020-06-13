@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const removeItemAction = (itemType, id) => ({
     type: 'REMOVE_ITEM',
     payload: {
@@ -25,3 +27,22 @@ export const addItemAction = (itemType, itemContent) => {
     }
 }
 
+export const authenticate = (username, password) => {
+
+    return function (dispatch) {
+        dispatch({ type: 'AUTHENTICATE_REQUEST' });
+
+        return axios.post('http://localhost:9000/api/user/login', {
+            username: username,
+            password: password,
+        })
+            .then(result => {
+                console.log(result);
+                dispatch({ type: 'AUTHENTICATE_SUCCESS', result })
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch({ type: 'AUTHENTICATE_FAILURE' })
+            });
+    }
+}

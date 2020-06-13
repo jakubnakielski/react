@@ -1,11 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import UserPageTemplate from 'templates/UserPageTemplate';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 
-const Articles = ({ articles }) => (
-    <GridTemplate itemsLength={articles.length}>
+const Articles = () => (
+    <GridTemplate itemsLength={0}>
         {articles.map(item => (
             <Card
                 key={item.id}
@@ -14,15 +13,12 @@ const Articles = ({ articles }) => (
         ))}
     </GridTemplate>
 );
-const mapStateToProps = (state) => {
-    const { articles } = state;
 
-    return {
-        articles: articles,
-    }
-}
+export default Articles;
 
-export default connect(mapStateToProps, null)(Articles);
+
+
+
 
 
 

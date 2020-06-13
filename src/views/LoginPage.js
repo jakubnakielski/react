@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import { routes } from 'routes';
+// import axios from 'axios';
 import logo from 'assets/logo.svg';
 import penIcon from 'assets/pen.svg';
 import twitterIcon from 'assets/twitter.svg';
@@ -69,15 +70,20 @@ const LoginPage = () => (
         </IconsWrapper>
         <Formik
             initialValues={{ username: '', password: '' }}
-            onSubmit={(values, { setSubmitting }) => {
-                console.log(values);
-                setSubmitting(false);
+            onSubmit={({ username, password }) => {
+                console.log(username, password);
+                // axios.post("http://localhost:900/api/user/login", {
+                //     username,
+                //     password
+                // })
+                // setSubmitting(false);
             }}
         >
             {({ setSubmitting }) => (
                 <StyledForm>
+                    {console.log(Field)}
                     <Heading>Sign in</Heading>
-                    <StyledInput as={Field} type='text' name='username' placeholder='username' />
+                    <StyledInput as={Field} type='text' name='username' placeholder='username' /> //onChange, onBlur
                     <StyledInput as={Field} type='password' name='password' placeholder='password' />
                     <Button activecolor='notes'>enter fanvote</Button>
                     <StyledParagraph as={Link} to={routes.register}>i want my account!</StyledParagraph>
